@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phòng thí nghiệm ảo – Hồ tinh bột và iodine</title>
+<style>
+:root{--navy:#10213d;--navy2:#183456;--panel:#fff;--ink:#17243a;--muted:#61718a;--cyan:#42c4d6;--violet:#30227c;--gold:#f1b95b;--green:#35a77a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#eaf3fb,#d9e9f5);font-family:Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(110deg,#10213d,#24547a);color:white;padding:22px 5vw 20px}
+header .tag{font-size:11px;letter-spacing:2px;font-weight:bold;color:#8ce8ee}
+h1{font-size:clamp(23px,4vw,36px);margin:8px 0}
+header p{margin:0;color:#d5e6f5;line-height:1.5}
+main{max-width:1200px;margin:22px auto;padding:0 16px 28px}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr);gap:16px}
+.panel{background:white;border:1px solid #d2dfeb;border-radius:18px;box-shadow:0 8px 25px #17395b12;overflow:hidden}
+.panelhead{padding:14px 18px;border-bottom:1px solid #e4ebf2;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.panelhead b{font-size:15px}.small{font-size:12px;color:var(--muted)}
+.labstage{min-height:470px;position:relative;background:radial-gradient(ellipse at 50% 70%,#eaf7ff,#d4e6f4 65%,#bed5e9);overflow:hidden}
+.shelf{position:absolute;left:0;right:0;bottom:52px;height:16px;background:linear-gradient(#b8d1e4,#7798b6);box-shadow:0 5px 8px #496b8733}
+.backglass{position:absolute;right:7%;top:50px;width:120px;height:175px;border:3px solid #a8c6d9;border-radius:10px 10px 35px 35px;opacity:.45}
+.backglass:after{content:"";position:absolute;bottom:0;left:0;right:0;height:35%;background:#55b8dc55;border-radius:0 0 30px 30px}
+.tubearea{position:absolute;left:50%;top:50%;transform:translate(-50%,-48%);width:210px;height:330px}
+.tube{position:absolute;left:50%;top:8px;transform:translateX(-50%);height:280px;width:104px;border:5px solid #f7ffff;border-top:8px solid #f7ffff;border-radius:12px 12px 48px 48px;background:#ffffff38;box-shadow:inset 7px 0 12px #fff9,0 5px 20px #3d668733;overflow:hidden;z-index:3}
+.tube:before{content:"";position:absolute;top:-8px;left:-4px;right:-4px;height:12px;border:3px solid #faffff;border-radius:50%;background:#e9f8ff}
+.liquid{position:absolute;left:4px;right:4px;bottom:4px;height:62%;background:#e7e9e5;border-radius:0 0 42px 42px;transition:background .8s,height .5s}
+.liquid:before{content:"";position:absolute;left:0;right:0;top:-5px;height:10px;border-radius:50%;background:inherit;filter:brightness(1.18)}
+.shine{position:absolute;left:13px;top:27px;width:7px;height:175px;border-radius:10px;background:#fff9;z-index:4}
+.tubelabel{position:absolute;top:298px;width:100%;text-align:center;font-size:12px;color:#526a82}
+.dropper{position:absolute;z-index:5;top:2px;right:0;width:65px;height:150px;transform:rotate(28deg);transform-origin:50% 10%;opacity:0;transition:all .5s}
+.dropper:before{content:"";position:absolute;left:23px;top:20px;width:20px;height:90px;background:linear-gradient(90deg,#b8d8e8,#fff,#9fc3d7);border:2px solid #8fb0c6;border-radius:5px}
+.dropper:after{content:"";position:absolute;left:28px;top:105px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:22px solid #8fb0c6}
+.drop{position:absolute;left:29px;top:130px;width:12px;height:16px;background:#4932a4;border-radius:70% 30% 65% 35%;transform:rotate(45deg);opacity:0}
+.dropper.active{opacity:1;top:25px;right:10px}
+.dropper.active .drop{animation:fall .8s 2}
+@keyframes fall{0%{opacity:0;transform:translateY(0) rotate(45deg)}40%{opacity:1}100%{opacity:0;transform:translateY(100px) rotate(45deg)}}
+.bath{position:absolute;z-index:2;left:50%;transform:translateX(-50%);bottom:35px;width:220px;height:145px;border:5px solid #f9ffff;border-top:8px solid #f9ffff;border-radius:12px 12px 38px 38px;background:#ffffff28;opacity:0;transition:opacity .5s}
+.bathwater{position:absolute;bottom:4px;left:4px;right:4px;height:68%;border-radius:0 0 30px 30px;background:#80c8e2aa}
+.bathlabel{position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-size:12px;color:#526a82}
+.ice{position:absolute;bottom:26px;left:24px;width:32px;height:32px;background:#e8fbff;border:2px solid #a9e2f2;transform:rotate(25deg);border-radius:6px;opacity:0}
+.ice.two{left:auto;right:22px;bottom:45px}
+.steam{position:absolute;z-index:5;left:50%;top:80px;width:100px;height:100px;transform:translateX(-50%);opacity:0}
+.steam:before,.steam:after{content:"";position:absolute;bottom:0;width:24px;height:85px;border-left:5px solid #fff;border-radius:50%;filter:blur(2px);animation:steam 1.5s infinite}
+.steam:after{left:45px;animation-delay:.5s}
+@keyframes steam{0%{transform:translateY(20px);opacity:0}50%{opacity:.7}100%{transform:translateY(-30px);opacity:0}}
+.labstage.heating .steam{opacity:1}
+.labstage.heating .bath{opacity:1}
+.labstage.cooling .bath{opacity:1}
+.labstage.cooling .ice{opacity:1}
+.equipment{padding:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;background:#f7fafc}
+.tool{border:1px solid #d9e5ef;border-radius:12px;padding:10px 6px;text-align:center;background:white;cursor:pointer;min-height:88px;transition:.2s}
+.tool:hover,.tool.selected{border-color:#39b6c8;background:#effcff;transform:translateY(-2px)}
+.tool .emoji{font-size:26px;display:block;margin-bottom:5px}.tool b{font-size:11px}.tool small{display:block;color:#6b7b8e;font-size:10px;margin-top:3px}
+.side{display:flex;flex-direction:column;gap:16px}
+.controls{padding:16px}
+.controls h2,.info h2{font-size:17px;margin:0 0 12px}
+.btn{border:0;border-radius:11px;padding:13px 12px;width:100%;font-weight:bold;font-size:14px;cursor:pointer;margin:5px 0;transition:.2s}
+.btn:disabled{opacity:.4;cursor:not-allowed}.btn:not(:disabled):hover{filter:brightness(1.05);transform:translateY(-1px)}
+.iodine{background:#dcd6ff;color:#2e247c}.heatbtn{background:#ffedcf;color:#744400}.coolbtn{background:#d8f4fb;color:#07556b}.reset{background:#e8edf3;color:#26374c}
+.state{background:#eaf8fb;border-left:4px solid var(--cyan);padding:11px;border-radius:8px;margin-top:10px;font-size:13px;line-height:1.5}
+.info{padding:16px}.info p{font-size:13px;line-height:1.6;color:#43536a;margin:7px 0}
+.info strong{color:#182a45}
+.tip{font-size:11px!important;color:#75849a!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.labstage{min-height:430px}.equipment{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="tag">MÔ PHỎNG TƯƠNG TÁC • HÓA HỌC</div><h1>Bàn thí nghiệm ảo: Hồ tinh bột và iodine</h1><p>Quan sát dụng cụ, chọn thao tác và theo dõi sự thay đổi màu sắc ngay trên cùng một bàn thí nghiệm.</p></header>
+<main>
+<div class="layout">
+<section class="panel">
+ <div class="panelhead"><b>🔬 KHU VỰC THÍ NGHIỆM</b><span class="small">Mô hình trực quan 3D giả lập</span></div>
+ <div id="stage" class="labstage">
+  <div class="backglass"></div>
+  <div class="tubearea">
+   <div id="dropper" class="dropper"><div class="drop"></div></div>
+   <div class="tube"><div id="liquid" class="liquid"></div><div class="shine"></div></div>
+   <div class="tubelabel">Ống nghiệm chứa mẫu</div>
+  </div>
+  <div id="bath" class="bath"><div class="bathwater"></div><div id="ice1" class="ice"></div><div id="ice2" class="ice two"></div><div class="bathlabel" id="bathlabel">Cốc nước</div></div>
+  <div class="steam"></div><div class="shelf"></div>
+ </div>
+ <div class="equipment">
+  <div class="tool selected" data-tool="tube"><span class="emoji">🧪</span><b>Ống nghiệm</b><small>Chứa hồ tinh bột</small></div>
+  <div class="tool" data-tool="dropper"><span class="emoji">💧</span><b>Ống nhỏ giọt</b><small>Dung dịch iodine</small></div>
+  <div class="tool" data-tool="beaker"><span class="emoji">🥛</span><b>Cốc thủy tinh</b><small>Bể nước nóng/lạnh</small></div>
+  <div class="tool" data-tool="water"><span class="emoji">💦</span><b>Nước cất</b><small>Dung môi pha loãng</small></div>
+ </div>
+</section>
+<aside class="side">
+ <section class="panel controls">
+  <h2>🎛️ Bảng điều khiển</h2>
+  <button id="add" class="btn iodine">💧 Thêm iodine</button>
+  <button id="heat" class="btn heatbtn" disabled>♨️ Đun nóng (bể nước)</button>
+  <button id="cool" class="btn coolbtn" disabled>❄️ Làm lạnh</button>
+  <button id="reset" class="btn reset">↻ Làm lại thí nghiệm</button>
+  <div id="state" class="state" aria-live="polite"><strong>Trạng thái:</strong> Hồ tinh bột pha loãng đang ở trong ống nghiệm. Chọn “Thêm iodine” để bắt đầu.</div>
+ </section>
+ <section class="panel info">
+  <h2 id="exhead">📘 Giải thích khoa học</h2>
+  <p id="explain">Hồ tinh bột có thành phần amylose với cấu trúc xoắn. Khi chưa thêm iodine, mẫu chưa xuất hiện màu xanh tím đặc trưng.</p>
+  <p class="tip"><strong>Lưu ý:</strong> Đây là mô phỏng học tập, không phải phép đo định lượng. Độ đậm màu bằng mắt chỉ cho nhận xét định tính/bán định lượng khi các điều kiện được giữ như nhau.</p>
+ </section>
+</aside>
+</div>
+</main>
+<script>
+const stage=document.getElementById('stage'),liquid=document.getElementById('liquid'),dropper=document.getElementById('dropper'),bath=document.getElementById('bath'),bathlabel=document.getElementById('bathlabel');
+const state=document.getElementById('state'),exhead=document.getElementById('exhead'),explain=document.getElementById('explain');
+const add=document.getElementById('add'),heat=document.getElementById('heat'),cool=document.getElementById('cool');
+let step=0;
+const tools=document.querySelectorAll('.tool');
+tools.forEach(t=>t.addEventListener('click',()=>{tools.forEach(x=>x.classList.remove('selected'));t.classList.add('selected');const name=t.dataset.tool;
+const descriptions={tube:'Ống nghiệm là nơi chứa mẫu hồ tinh bột và quan sát màu.',dropper:'Ống nhỏ giọt minh họa thao tác thêm dung dịch iodine vào mẫu.',beaker:'Cốc thủy tinh dùng làm bể nước để mô phỏng quá trình làm nóng hoặc làm lạnh.',water:'Nước cất được dùng làm dung môi và để pha loãng mẫu trong mô hình.'};
+state.innerHTML='<strong>Dụng cụ được chọn:</strong> '+descriptions[name];}));
+function render(){
+ liquid.style.background=['#e7e9e5','#30227c','#e5e5df','#30227c'][step];
+ stage.classList.toggle('heating',step===2);stage.classList.toggle('cooling',step===3);
+ bathlabel.textContent=step===2?'Bể nước ấm (minh họa)':step===3?'Bể nước lạnh (minh họa)':'Cốc thủy tinh';
+ add.disabled=step!==0;heat.disabled=step!==1;cool.disabled=step!==2;
+ if(step===0){state.innerHTML='<strong>Trạng thái:</strong> Hồ tinh bột pha loãng đang ở trong ống nghiệm. Chọn “Thêm iodine” để bắt đầu.';exhead.textContent='📘 Giải thích khoa học';explain.textContent='Hồ tinh bột có thành phần amylose với cấu trúc xoắn. Khi chưa thêm iodine, mẫu chưa xuất hiện màu xanh tím đặc trưng.'}
+ if(step===1){state.innerHTML='<strong>Hiện tượng:</strong> Mẫu chuyển sang màu xanh tím đậm.';exhead.textContent='🧬 Bước 1 – Hình thành phức màu';explain.innerHTML='Các dạng iodine/polyiodide tương tác với vùng xoắn của amylose trong tinh bột, tạo phức có màu xanh tím hoặc xanh đen đặc trưng.'}
+ if(step===2){state.innerHTML='<strong>Hiện tượng:</strong> Màu xanh tím nhạt dần hoặc biến mất khi được làm nóng.';exhead.textContent='♨️ Bước 2 – Đun nóng';explain.innerHTML='Nhiệt làm cấu trúc xoắn của amylose thay đổi, khiến phức màu kém bền và màu xanh tím mất đi hoặc nhạt rõ rệt. Mô phỏng dùng <strong>bể nước nóng</strong>, không dùng ngọn lửa trực tiếp.'}
+ if(step===3){state.innerHTML='<strong>Hiện tượng:</strong> Màu xanh tím xuất hiện trở lại khi mẫu nguội.';exhead.textContent='❄️ Bước 3 – Làm lạnh';explain.innerHTML='Khi nguội, cấu trúc xoắn amylose có thể hình thành lại, giúp tương tác với iodine/polyiodide được phục hồi nên màu xanh tím xuất hiện trở lại.'}
+}
+add.addEventListener('click',()=>{step=1;dropper.classList.add('active');setTimeout(()=>dropper.classList.remove('active'),1600);render()});
+heat.addEventListener('click',()=>{step=2;render()});
+cool.addEventListener('click',()=>{step=3;render()});
+document.getElementById('reset').addEventListener('click',()=>{step=0;dropper.classList.remove('active');render()});
+render();
+</script>
+</body></html>
